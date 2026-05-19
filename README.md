@@ -1,11 +1,11 @@
 # Startup Opportunity Aggregator (Opportunity Pulse)
 
-[![CI](https://github.com/SURYAS1306/Startup-Opportunity-Aggregator/actions/workflows/ci.yml/badge.svg)](https://github.com/SURYAS1306/Startup-Opportunity-Aggregator/actions)
+[![CI](https://github.com/SURYAS1306/Startup-Opportunity-Aggregator-project/actions/workflows/ci.yml/badge.svg)](https://github.com/SURYAS1306/Startup-Opportunity-Aggregator-project/actions)
 
 > **Assignment 3** — Web Scraping + Data Pipeline  
 > Collects startup opportunities (grants, hackathons, fellowships, conferences) from multiple public sources, deduplicates them, stores in SQLite, and displays them in a searchable dashboard with analytics.
 
-**Repository:** [github.com/SURYAS1306/Startup-Opportunity-Aggregator](https://github.com/SURYAS1306/Startup-Opportunity-Aggregator)
+**Repository:** [github.com/SURYAS1306/Startup-Opportunity-Aggregator-project](https://github.com/SURYAS1306/Startup-Opportunity-Aggregator-project)
 
 ---
 
@@ -14,7 +14,7 @@
 | Environment | URL |
 |-------------|-----|
 | **Local** | http://127.0.0.1:8080 (after `./start.sh`) |
-| **Render** | Deploy via `render.yaml` — add your URL here after deploy |
+| **Render** | **Deploy:** see [DEPLOY.md](DEPLOY.md) — then paste your URL here |
 
 > **Note:** macOS uses port 5000 for AirPlay Receiver. This app defaults to **port 8080** to avoid conflicts.
 
@@ -52,8 +52,8 @@
 ## Quick Start
 
 ```bash
-git clone https://github.com/SURYAS1306/Startup-Opportunity-Aggregator.git
-cd Startup-Opportunity-Aggregator
+git clone https://github.com/SURYAS1306/Startup-Opportunity-Aggregator-project.git
+cd Startup-Opportunity-Aggregator-project
 chmod +x start.sh
 ./start.sh
 ```
@@ -108,10 +108,14 @@ docker compose up --build
 
 ## Deploy to Render
 
-1. Push to GitHub.
-2. [Render](https://render.com) → New Web Service → connect repo.
-3. Uses `render.yaml` automatically.
-4. Set `RUN_SCRAPE_ON_START=1`.
+**Full guide:** [DEPLOY.md](DEPLOY.md)
+
+1. Repo is on GitHub: [Startup-Opportunity-Aggregator-project](https://github.com/SURYAS1306/Startup-Opportunity-Aggregator-project)
+2. [Render](https://render.com) → **New Web Service** → connect that repo
+3. Build: `pip install -r requirements.txt && python scripts/run_scraper.py --keyword "AI startup"`
+4. Start: `gunicorn run:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120`
+5. Env: `RUN_SCRAPE_ON_START=1`, `SCRAPE_KEYWORD=AI startup`
+6. Copy the `https://....onrender.com` URL → add to README **Live Demo** table
 
 ---
 

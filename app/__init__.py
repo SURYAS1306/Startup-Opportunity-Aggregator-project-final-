@@ -22,6 +22,8 @@ def create_app(run_scheduler: bool = True) -> Flask:
     init_db()
     app.register_blueprint(bp)
 
+    _maybe_run_initial_scrape()
+
     if run_scheduler and not os.environ.get("DISABLE_SCHEDULER"):
         start_scheduler(
             keyword=os.environ.get("SCRAPE_KEYWORD", "AI startup"),
@@ -29,3 +31,19 @@ def create_app(run_scheduler: bool = True) -> Flask:
         )
 
     return app
+
+
+def _maybe_run_initial_scrape() -> None:
+    """Populate DB on deploy when using gunicorn (Render/Railway)."""
+    if os.environ.get("RUN_SCRAPE_ON_START") != "1":
+        return
+    from app.database import get_stats
+    from app.scraper_runner import run_all_scrapers
+
+    if get_stats().get("total", 0) > 0:
+        return
+    logging.getLogger(__name__).info("Running initial scrape (RUN_SCRAPE_ON_START)")
+    run_all_scrapers(
+        keyword=os.environ.get("SCRAPE_KEYWORD", "AI startup"),
+        region=os.environ.get("SCRAPE_REGION", ""),
+    )

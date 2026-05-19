@@ -2,7 +2,7 @@ services:
   - type: web
     name: startup-opportunity-aggregator
     runtime: python
-    buildCommand: pip install -r requirements.txt
+    buildCommand: pip install -r requirements.txt && python scripts/run_scraper.py --keyword "AI startup"
     startCommand: gunicorn run:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     envVars:
       - key: RUN_SCRAPE_ON_START
