@@ -16,8 +16,6 @@
 | **Local** | http://127.0.0.1:8080 (after `./start.sh`) |
 | **Render** | https://startup-opportunity-aggregator-project.onrender.com |
 
-> **Note:** macOS uses port 5000 for AirPlay Receiver. This app defaults to **port 8080** to avoid conflicts.
-
 ---
 
 ## Highlights (Evaluation Criteria)
@@ -160,7 +158,7 @@ RUN_SCRAPE_ON_START=1
 SCRAPE_KEYWORD=AI startup
 ```
 
-7. Your deployed app:
+7. Deployed app:
 
 ```text
 https://startup-opportunity-aggregator-project.onrender.com
